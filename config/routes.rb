@@ -1,15 +1,12 @@
 Rails.application.routes.draw do
 
+  root 'alexa#index'
+
   get 'alexa/index'
 
   devise_for :users
-  #root 'pvoutput#index'
 
-  get 'pvoutput/index'
-  #post 'pvoutput/index'
-  post "/" => "pvoutput#index", :as => "root"
-  #post root
-
+  #Alexa for pvoutput.org
   namespace :pvoutput do
     namespace :v1 do
       post 'pvoutput', :to => "pvoutput#index"
