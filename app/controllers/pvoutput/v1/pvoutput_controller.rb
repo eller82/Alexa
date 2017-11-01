@@ -1,7 +1,5 @@
 class Pvoutput::V1::PvoutputController < ApplicationController
 
-#Api::V1::PostsController
-
   require 'alexa_rubykit'
   require 'net/http'
   require 'uri'
@@ -14,7 +12,6 @@ class Pvoutput::V1::PvoutputController < ApplicationController
     request = AlexaRubykit.build_request(request_json)
 
     session = request.session
-
 
     # generates the output
     response = AlexaRubykit::Response.new
@@ -33,11 +30,9 @@ class Pvoutput::V1::PvoutputController < ApplicationController
       # Process your Intent Request
       p "#{request.slots}"
       p "#{request.name}"
-      #pvoutput = Net::HTTP.get_response("https://pvoutput.org/service/r2/getstatus.jsp","key=d890b26df0e774786a07698ee43256fa16bbefef&sid=43733")
-      #puts pvoutput.body
 
       uri = URI.parse('https://pvoutput.org/service/r2/getstatus.jsp?key=d890b26df0e774786a07698ee43256fa16bbefef&sid=43733')
-      #uri = URI.parse("http://www.google.com")
+
       pvoutput = Net::HTTP.get_response(uri)
       puts pvoutput.body
 
@@ -47,7 +42,6 @@ class Pvoutput::V1::PvoutputController < ApplicationController
       puts pv_result
       kilowatt = pv_result[2].to_d/1000
 
-      #response.add_speech("I received an intent named #{request.name}?")
       response.add_speech("Du hast bisher #{kilowatt.round(2)} Kilowatt Stunden generiert.")
 
       response.add_hash_card( { :title => 'Ruby Intent', :subtitle => "Intent #{request.name}" } )
@@ -60,7 +54,6 @@ class Pvoutput::V1::PvoutputController < ApplicationController
       halt 200
     end
 
-    #output.add_speech("Du hast heute 42 Kilowatt Stunden generiert.")
     render json: response.build_response(session_end)
 
   end

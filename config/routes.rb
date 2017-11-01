@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  get 'alexa/index'
+
+  devise_for :users
   #root 'pvoutput#index'
 
   get 'pvoutput/index'
