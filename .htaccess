@@ -1,0 +1,24 @@
+RewriteEngine on
+#RewriteRule ^dyw/(.*)$ /fcgi-bin/dyw/$1 [QSA,L]
+#RewriteRule ^dyw/(.*)$ /0.0.0.0:3001 [QSA,L]
+#RewriteRule ^(/)?$ http://localhost:49231/$1 [P,L]
+
+RewriteEngine On
+RewriteRule (.*) http://localhost:4568/$1 [P]
+
+# Only apply to URLs on this domain
+#RewriteCond %{HTTP_HOST} ^(www.)?eller82.virgo.uberspace.de$
+
+# Only apply to URLs that aren't already under folder.
+#RewriteCond %{REQUEST_URI} !^/dyw/
+
+# Don't apply to URLs that go to existing files or folders.
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rewrite all those to insert /folder.
+#RewriteRule ^(.*)$ 127.0.0.1:3002/$1
+
+# Also redirect the root folder.
+#RewriteCond %{HTTP_HOST} ^(www.)?eller82.virgo.uberspace.de$
+#RewriteRule ^(/)?$ 127.0.0.1:3002 [L]
