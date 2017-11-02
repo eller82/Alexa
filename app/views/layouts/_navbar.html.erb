@@ -9,8 +9,8 @@
         <a class="nav-link" href="/"><i class="fa fa-home" aria-hidden="true"></i> Home <span class="sr-only">(current)</span></a>
       </li>
       <% if user_signed_in? %>
-      <li class="nav-item <%= active_class(chart_path) %>">
-        <%= link_to '<i class="fa fa-line-chart" aria-hidden="true"></i> Verlauf'.html_safe, chart_path, :class => 'nav-link' %>
+      <li class="nav-item <%= active_class(root_path) %>">
+        <%= link_to '<i class="fa fa-line-chart" aria-hidden="true"></i> Verlauf'.html_safe, 'todo', :class => 'nav-link' %>
       </li>
       <% end %>
     </ul>
