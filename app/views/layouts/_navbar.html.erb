@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-md navbar-light bg-faded fixed-top" style="background-color: #fff;">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="/">Alexa@Mellentin.eu</a>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item <%= active_class(root_path) %>">
+        <a class="nav-link" href="/"><i class="fa fa-home" aria-hidden="true"></i> Home <span class="sr-only">(current)</span></a>
+      </li>
+      <% if user_signed_in? %>
+      <li class="nav-item <%= active_class(chart_path) %>">
+        <%= link_to '<i class="fa fa-line-chart" aria-hidden="true"></i> Verlauf'.html_safe, chart_path, :class => 'nav-link' %>
+      </li>
+      <% end %>
+    </ul>
+    <ul class="navbar-nav pull-xs-right">
+      <% if user_signed_in? %>
+        <li class ="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <strong><i class="fa fa-user" aria-hidden="true"></i> <%= current_user.email %></strong>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <%= link_to '<i class="fa fa-user" aria-hidden="true"></i> Edit profile'.html_safe, edit_user_registration_path, :class => 'dropdown-item' %>
+            <%= link_to '<i class="fa fa-sign-out" aria-hidden="true"></i> Logout'.html_safe, destroy_user_session_path, method: :delete, :class => 'dropdown-item'  %>
+          </div>
+        </li>
+      <% else %>
+        <li class="nav-item <%= active_class(new_user_registration_path) %>">
+          <%= link_to '<i class="fa fa-user-plus" aria-hidden="true"></i> Sign up'.html_safe, new_user_registration_path, :class => 'nav-link'  %>
+        </li>
+        <li class="nav-item <%= active_class(new_user_session_path) %>">
+          <%= link_to '<i class="fa fa-sign-out" aria-hidden="true"></i> Login'.html_safe, new_user_session_path, :class => 'nav-link'  %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>
