@@ -4,7 +4,8 @@ Rails.application.routes.draw do
 
   get 'alexa/index'
 
-  devise_for :users
+  #devise_for :users
+  devise_for :users, controllers: { sessions: 'users/sessions' }
 
   #Alexa for pvoutput.org
   namespace :pvoutput do
