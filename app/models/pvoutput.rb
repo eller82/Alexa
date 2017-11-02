@@ -1,0 +1,2 @@
+class Pvoutput < ApplicationRecord
+end
