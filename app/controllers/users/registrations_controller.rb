@@ -30,11 +30,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
        alexa.save
 
-       #if alexa.save
-         #redirect_to session[:redirect] + '#access_token=' + resource.token + '&state=' + session[:state] + '&token_type=Bearer'
-         #https://subdomain.amazon.com/spa/skill/account-linking-status.html?vendorId=W5TGH673R#access_token=something-I-made-up&state=same_long_string&token_type=Bearer
-       #end
-
      end
 
   end
@@ -63,7 +58,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params

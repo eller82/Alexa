@@ -12,6 +12,7 @@ class Pvoutput::V1::PvoutputController < ApplicationController
     request = AlexaRubykit.build_request(request_json)
 
     session = request.session
+    #session.user['accessToken']
 
     # generates the output
     response = AlexaRubykit::Response.new
@@ -28,21 +29,28 @@ class Pvoutput::V1::PvoutputController < ApplicationController
 
     if (request.type == 'INTENT_REQUEST')
       # Process your Intent Request
-      p "#{request.slots}"
-      p "#{request.name}"
+      #p "#{request.slots}"
+      #p "#{request.name}"
 
-      uri = URI.parse('https://pvoutput.org/service/r2/getstatus.jsp?key=d890b26df0e774786a07698ee43256fa16bbefef&sid=43733')
+      if getBasicInformation(session.user['accessToken'])
+        case request.name
+        when "getPVoutputGeneration"
+          uri = URI.parse("https://pvoutput.org/service/r2/getstatus.jsp?key=#{@@pv_key}&sid=#{@@pv_sid}")
+          pvoutput = Net::HTTP.get_response(uri)
 
-      pvoutput = Net::HTTP.get_response(uri)
-      puts pvoutput.body
+          pv_result = Array.new
+          pv_result = pvoutput.body.split(',')
 
-      pv_result = Array.new
-      pv_result = pvoutput.body.split(',')
+          kilowatt = pv_result[2].to_d/1000
 
-      puts pv_result
-      kilowatt = pv_result[2].to_d/1000
+          @@message = "Du hast bisher #{kilowatt.round(2)} Kilowatt Stunden generiert."
+        when other
+          @@message = "Ich verstehe dich leider nicht."
 
-      response.add_speech("Du hast bisher #{kilowatt.round(2)} Kilowatt Stunden generiert.")
+        end
+      end
+
+      response.add_speech(@@message)
 
       response.add_hash_card( { :title => 'Ruby Intent', :subtitle => "Intent #{request.name}" } )
     end
@@ -58,6 +66,49 @@ class Pvoutput::V1::PvoutputController < ApplicationController
 
   end
 
-  #https://pvoutput.org/service/r2/getstatus.jsp?key=d890b26df0e774786a07698ee43256fa16bbefef&sid=43733
+  protected
+
+  def getBasicInformation(accessToken)
+    #check if User exists and if Pvoutput.org Information is available
+    if not checkUser(accessToken)
+      @@message = "Benutzer nicht vorhanden, bitte zuerst mit Alexa App verbinden."
+      return false
+    else
+      if not getPvoutput(@@userID)
+        @@message = "Pvoutput.org Daten noch nicht hinterlegt. Bitte melde dich bei alexa.mellentin.eu mit deinem Benutzername an und hinterlege deine Zugriffsdaten. Den Link siehst du jetzt auch in deiner Alexa App."
+        return false
+      else
+        return true
+      end
+    end
+  end
+
+  #check if user exists
+  def checkUser(userToken)
+
+    user = User.find_by_token(userToken)
+
+    if user
+      @@userID = user.id
+      return true
+    else
+      return false
+    end
+  end
+
+  #get pvoutput values
+  def getPvoutput(userID)
+
+    solar = Pvoutput.find_by UserID: userID
+
+    if solar
+      @@pv_sid = solar.sid
+      @@pv_key = solar.key
+      return true
+    else
+      return false
+    end
+
+  end
 
 end
