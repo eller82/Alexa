@@ -43,16 +43,19 @@ class Pvoutput::V1::PvoutputController < ApplicationController
 
           kilowatt = pv_result[2].to_d/1000
 
+          @@subtitle = "generierter Strom"
           @@message = "Du hast bisher #{kilowatt.round(2)} Kilowatt Stunden generiert."
         when other
+          @@subtitle = "ein Fehler ist aufgetreten"
           @@message = "Ich verstehe dich leider nicht."
-
         end
+      else
+        @@subtitle = "ein Fehler ist aufgetreten"
       end
 
       response.add_speech(@@message)
+      response.add_hash_card( { :title => "PVoutput", :subtitle => @@subtitle, :content => @@message } )
 
-      response.add_hash_card( { :title => 'Ruby Intent', :subtitle => "Intent #{request.name}" } )
     end
 
     if (request.type =='SESSION_ENDED_REQUEST')
@@ -75,7 +78,7 @@ class Pvoutput::V1::PvoutputController < ApplicationController
       return false
     else
       if not getPvoutput(@@userID)
-        @@message = "Pvoutput.org Daten noch nicht hinterlegt. Bitte melde dich bei alexa.mellentin.eu mit deinem Benutzername an und hinterlege deine Zugriffsdaten. Den Link siehst du jetzt auch in deiner Alexa App."
+        @@message = "Pvoutput.org Daten noch nicht hinterlegt. Bitte melde dich bei https://alexa.mellentin.eu mit deinem Benutzername an und hinterlege deine Zugriffsdaten. Den Link siehst du jetzt auch in deiner Alexa App."
         return false
       else
         return true
