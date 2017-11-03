@@ -23,8 +23,23 @@ class Pvoutput::V1::PvoutputController < ApplicationController
     if (request.type == 'LAUNCH_REQUEST')
       # Process your Launch Request
       # Call your methods for your application here that process your Launch Request.
-      response.add_speech('Ruby running ready!')
-      response.add_hash_card( { :title => 'Ruby Run', :subtitle => 'Ruby Running Ready!' } )
+      if getBasicInformation(session.user['accessToken'])
+
+        uri = URI.parse("https://pvoutput.org/service/r2/getstatus.jsp?key=#{@@pv_key}&sid=#{@@pv_sid}")
+        pvoutput = Net::HTTP.get_response(uri)
+
+        pv_result = Array.new
+        pv_result = pvoutput.body.split(',')
+
+        kilowatt = pv_result[2].to_d/1000
+
+        @@subtitle = "generierter Strom"
+        @@message = "Du hast bisher #{kilowatt.round(2)} Kilowatt Stunden generiert."
+
+        response.add_speech(@@message)
+        response.add_hash_card( { :title => "PVoutput", :subtitle => @@subtitle, :content => @@message } )
+
+      end
     end
 
     if (request.type == 'INTENT_REQUEST')
