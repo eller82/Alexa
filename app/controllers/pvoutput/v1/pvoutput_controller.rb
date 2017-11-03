@@ -60,7 +60,18 @@ class Pvoutput::V1::PvoutputController < ApplicationController
 
           @@subtitle = "generierter Strom"
           @@message = "Du hast bisher #{kilowatt.round(2)} Kilowatt Stunden generiert."
-        when other
+        when "getPVoutputUsage"
+          uri = URI.parse("https://pvoutput.org/service/r2/getstatus.jsp?key=#{@@pv_key}&sid=#{@@pv_sid}")
+          pvoutput = Net::HTTP.get_response(uri)
+
+          pv_result = Array.new
+          pv_result = pvoutput.body.split(',')
+
+          kilowatt = pv_result[4].to_d/1000
+
+          @@subtitle = "verbrauchter Strom"
+          @@message = "Du hast bisher #{kilowatt.round(2)} Kilowatt Stunden verbraucht."
+        else
           @@subtitle = "ein Fehler ist aufgetreten"
           @@message = "Ich verstehe dich leider nicht."
         end
