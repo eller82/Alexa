@@ -44,6 +44,8 @@ GEM
       bundler (~> 1.7)
       rake
     arel (8.0.0)
+    attr_encrypted (3.0.3)
+      encryptor (~> 3.0.0)
     autoprefixer-rails (7.1.6)
       execjs
     bcrypt (3.1.11)
@@ -78,6 +80,7 @@ GEM
       railties (>= 4.1.0, < 5.2)
       responders
       warden (~> 1.2.3)
+    encryptor (3.0.0)
     erubi (1.7.0)
     execjs (2.7.0)
     ffi (1.9.18)
@@ -207,6 +210,7 @@ PLATFORMS
 
 DEPENDENCIES
   alexa_rubykit
+  attr_encrypted (~> 3.0.0)
   bootstrap (~> 4.0.0.beta2.1)
   byebug
   capybara (~> 2.13)
@@ -230,4 +234,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   1.15.1
+   1.16.0

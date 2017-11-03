@@ -45,6 +45,8 @@ gem 'jquery-rails'
 gem 'font-awesome-sass'
 #generation of secure token
 gem 'has_secure_token'
+#encrypt user data into database 
+gem "attr_encrypted", "~> 3.0.0"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

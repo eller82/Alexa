@@ -16,7 +16,7 @@ class AlexaController < ApplicationController
 
   def savePVoutput
 
-    #create a new entry or update existing data 
+    #create a new entry or update existing data
     Pvoutput.
       find_or_initialize_by(:UserID => current_user.id).
       update_attributes!(:key => params[:pvoutput][:key],

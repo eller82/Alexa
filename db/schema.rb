@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171102140558) do
+ActiveRecord::Schema.define(version: 20171103100948) do
 
   create_table "amazons", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "UniqueID"
@@ -21,11 +21,13 @@ ActiveRecord::Schema.define(version: 20171102140558) do
   end
 
   create_table "pvoutputs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
-    t.bigint "UserId"
+    t.bigint "UserID"
     t.text "sid"
     t.text "key"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "encrypted_key"
+    t.string "encrypted_key_iv"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
