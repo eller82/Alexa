@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   post 'alexa/savePVoutput'
   patch 'alexa/savePVoutput'
 
+  get 'privacy', :to => "alexa#privacy"
+
   #devise_for :users
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
   #devise_for :users, :controllers: { registrations: 'users/registrations' }

@@ -1,6 +1,6 @@
 class AlexaController < ApplicationController
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :except => [:privacy]
 
   def index
 
@@ -23,6 +23,10 @@ class AlexaController < ApplicationController
                          :sid => params[:pvoutput][:sid])
 
     redirect_to root_path
+  end
+
+  def privacy
+
   end
 
 end
