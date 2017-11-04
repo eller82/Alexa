@@ -29,6 +29,6 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
-en:
-  hello: "Hello world"
-  sign_up: "The Sign up is only available via the Alexa App."
+de:
+  hello: "Hallo Welt"
+  sign_up: "Der Sign up geht nur über die Alexa App."
