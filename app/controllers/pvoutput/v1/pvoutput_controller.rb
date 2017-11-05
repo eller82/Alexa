@@ -1,5 +1,7 @@
 class Pvoutput::V1::PvoutputController < ApplicationController
 
+  skip_before_action :set_locale_from_browser
+
   require 'alexa_rubykit'
   require 'net/http'
   require 'uri'
