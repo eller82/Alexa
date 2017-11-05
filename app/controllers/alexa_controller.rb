@@ -36,7 +36,7 @@ class AlexaController < ApplicationController
     @@pv_sid = params[:sid]
 
     uri = URI.parse("https://pvoutput.org/service/r2/getstatus.jsp?key=#{@@pv_key}&sid=#{@@pv_sid}")
-    logger.info uri
+    #logger.info uri
     pvoutput = Net::HTTP.get_response(uri)
 
 
