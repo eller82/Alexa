@@ -32,3 +32,9 @@
 de:
   hello: "Hallo Welt"
   sign_up: "Der Sign up geht nur über die Alexa App."
+  pvoutput: "Du findest die Daten bei deinen Account Settings unter: "
+  pvkeyhelp: "Dein API Key wird verschlüsselt in der Datenbank gespeichert."
+  pvtest: "Teste deine Verbindung: "
+  pv_generation: "Erzeugt"
+  pv_usage: "Verbrauch"
+  pvteststatement: "Du musst deine Daten speichern bevor du erneut testen kannst."

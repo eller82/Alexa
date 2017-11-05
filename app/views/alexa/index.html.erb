@@ -1,18 +1,39 @@
 <h2>PVoutput.org Daten</h2>
 
-<%= form_for @pvoutput, url: {action: "savePVoutput"}, html: {class: "nifty_form"} do |f| %>
+<div class="container">
+  <div class = "row">
+    <div class="col-sm">
+      <%= form_for @pvoutput, url: {action: "savePVoutput"} do |f| %>
 
-  <div class="field">
-    <%= f.label :key %><br />
-    <%= f.text_field :key, autofocus: true %>
+        <div class="form-group">
+          <%= f.label :key, "API Key" %><br />
+          <%= f.text_field :key, autofocus: true, class: "form-control" %>
+          <small id="emailHelp" class="form-text text-muted"><%=t :pvkeyhelp%></small>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :sid, "System Id" %> <br />
+          <%= f.text_field :sid, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.submit "Update", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+
+      <% if not @pvoutput.key.blank? %>
+        <hr />
+        <%= t :pvtest %>
+        <%= link_to "Test", {controller: "alexa", action: "pvoutputtest", key: @pvoutput.key, sid: @pvoutput.sid}, remote: true %>
+        <div id="pvtestresult">
+        </div>
+      <% end %>
+    </div>
+    <div class="col-sm">
+      <%= t :pvoutput %><a href="https://pvoutput.org/account.jsp" target="=_blank">https://pvoutput.org/account.jsp</a>
+      <br /><br />
+      <%= image_tag "pvoutput/pv_settings.png" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :sid %> <br />
-    <%= f.text_field :sid %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
+</div>

@@ -1,5 +1,8 @@
 class AlexaController < ApplicationController
 
+  require 'net/http'
+  require 'uri'
+
   before_action :authenticate_user!, :except => [:privacy]
 
   def index
@@ -14,6 +17,7 @@ class AlexaController < ApplicationController
 
   end
 
+  #Save PVOutput information to the Database
   def savePVoutput
 
     #create a new entry or update existing data
@@ -25,6 +29,33 @@ class AlexaController < ApplicationController
     redirect_to root_path
   end
 
+  #pvoutputtest
+  def pvoutputtest
+
+    @@pv_key = params[:key]
+    @@pv_sid = params[:sid]
+
+    uri = URI.parse("https://pvoutput.org/service/r2/getstatus.jsp?key=#{@@pv_key}&sid=#{@@pv_sid}")
+    logger.info uri
+    pvoutput = Net::HTTP.get_response(uri)
+
+
+    if pvoutput.code == "200"
+      @pvoutputtest = true
+      @pv_result = Array.new
+      @pv_result = pvoutput.body.split(',')
+      #kilowatt = pv_result[2].to_d/1000
+    else
+      @pvoutputtest = pvoutput.message
+    end
+
+    respond_to do |format|
+        format.js
+    end
+
+  end
+
+  #just render the privacy html file
   def privacy
 
   end

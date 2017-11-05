@@ -32,3 +32,9 @@
 en:
   hello: "Hello world"
   sign_up: "The Sign up is only available via the Alexa App."
+  pvoutput: "You can find the data under your Account Settings at: "
+  pvkeyhelp: "Your API Key will be stored encrypted into the Datebase."
+  pvtest: "Test your connection: "
+  pv_generation: "Generation"
+  pv_usage: "Usage"
+  pvteststatement: "You need to save your data before you can test again."

@@ -1,0 +1,16 @@
+<div id="pvtestresult">
+  <% if @pvoutputtest == true %>
+    <br />
+    Test: ok
+    <br /> <br />
+    <div class"row">
+      <strong><%= t :pv_generation %>:</strong> <%= @pv_result[2] %>Wh
+      <br/>
+      <strong><%= t :pv_usage %>:</strong> <%= @pv_result[4] %>Wh
+    </div>
+  <% else %>
+    Test: <%= @pvoutputtest %>
+    <br />
+    <%= t :pvteststatement %>
+  <% end %>
+</div>

@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   get 'alexa/index'
   post 'alexa/savePVoutput'
   patch 'alexa/savePVoutput'
+  post '/pvoutputtest' => 'alexa#pvoutputtest'
+  get '/pvoutputtest' => 'alexa#pvoutputtest'
 
   get 'privacy', :to => "alexa#privacy"
 
