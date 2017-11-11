@@ -20,6 +20,8 @@ class Pvoutput::V1::PvoutputController < ApplicationController
     response = AlexaRubykit::Response.new
     session_end = true
 
+    @@format = "Simple"
+
     # Response
     # If it's a launch request
     if (request.type == 'LAUNCH_REQUEST')
@@ -55,6 +57,7 @@ class Pvoutput::V1::PvoutputController < ApplicationController
       #p "#{request.name}"
 
       if getBasicInformation(session.user['accessToken'])
+
         case request.name
         when "getPVoutputGeneration"
           uri = URI.parse("https://pvoutput.org/service/r2/getstatus.jsp?key=#{@@pv_key}&sid=#{@@pv_sid}")
@@ -87,7 +90,7 @@ class Pvoutput::V1::PvoutputController < ApplicationController
       end
 
       response.add_speech(@@message)
-      response.add_hash_card( { :title => "PVoutput", :subtitle => @@subtitle, :content => @@message } )
+      response.add_hash_card( { :title => "PVoutput", :subtitle => @@subtitle, :content => @@message, :format => @@format } )
 
     end
 
@@ -113,7 +116,6 @@ class Pvoutput::V1::PvoutputController < ApplicationController
     else
       if not getPvoutput(@@userID)
         @@message = "Pvoutput.org Daten noch nicht hinterlegt. Bitte melde dich bei https://alexa.mellentin.eu mit deinem Benutzername an und hinterlege deine Zugriffsdaten. Den Link siehst du jetzt auch in deiner Alexa App."
-        @@format = "Standard"
         return false
       else
         return true
