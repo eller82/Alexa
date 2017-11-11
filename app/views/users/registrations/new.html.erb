@@ -1,6 +1,6 @@
 <h2>Sign up</h2>
 
-<% if session[:client_id].nil? %>
+<% if session[:client_id].blank? %>
 
   <%=t :sign_up %>
 
@@ -36,6 +36,7 @@
 
   <br />
   Nach der Verkn&uuml;pfung mit Alexa musst du unter http://alexa.mellentin.eu noch deine PVOutput Daten hinterlegen.
+  <br />
 
 <% end %>
 
