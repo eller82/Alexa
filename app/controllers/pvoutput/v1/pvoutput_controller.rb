@@ -40,6 +40,11 @@ class Pvoutput::V1::PvoutputController < ApplicationController
 
         response.add_speech(@@message)
         response.add_hash_card( { :title => "PVoutput", :subtitle => @@subtitle, :content => @@message } )
+      else
+
+        @@subtitle = "Ein Fehler ist aufgetreten."
+        response.add_speech(@@message)
+        response.add_hash_card( { :title => "PVoutput", :subtitle => @@subtitle, :content => @@message, :type => @@format } )
 
       end
     end
@@ -103,10 +108,12 @@ class Pvoutput::V1::PvoutputController < ApplicationController
     #check if User exists and if Pvoutput.org Information is available
     if not checkUser(accessToken)
       @@message = "Benutzer nicht vorhanden, bitte zuerst mit Alexa App verbinden."
+      @@format = "LinkAccount"
       return false
     else
       if not getPvoutput(@@userID)
         @@message = "Pvoutput.org Daten noch nicht hinterlegt. Bitte melde dich bei https://alexa.mellentin.eu mit deinem Benutzername an und hinterlege deine Zugriffsdaten. Den Link siehst du jetzt auch in deiner Alexa App."
+        @@format = "Standard"
         return false
       else
         return true
