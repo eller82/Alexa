@@ -7,7 +7,7 @@ class AlexaController < ApplicationController
 
   def index
 
-    solar = Pvoutput.find_by UserID: current_user.id
+    solar = Pvoutput.find_by user_id: current_user.id
 
     if solar
       @pvoutput = solar
@@ -22,7 +22,7 @@ class AlexaController < ApplicationController
 
     #create a new entry or update existing data
     Pvoutput.
-      find_or_initialize_by(:UserID => current_user.id).
+      find_or_initialize_by(:user_id => current_user.id).
       update_attributes!(:key => params[:pvoutput][:key],
                          :sid => params[:pvoutput][:sid])
 

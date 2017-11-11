@@ -164,7 +164,7 @@ class Pvoutput::V1::PvoutputController < ApplicationController
   #get pvoutput values
   def getPvoutput(userID)
 
-    solar = Pvoutput.find_by UserID: userID
+    solar = Pvoutput.find_by user_id: userID
 
     if solar
       @@pv_sid = solar.sid
