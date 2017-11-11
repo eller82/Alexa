@@ -7,12 +7,19 @@ class AlexaController < ApplicationController
 
   def index
 
-    solar = Pvoutput.find_by user_id: current_user.id
+    if not session[:redirect].blank?
 
-    if solar
-      @pvoutput = solar
+      redirect_to session[:redirect] + '#access_token=' + current_user.token + '&state=' + session[:state] + '&token_type=Bearer'
+
     else
-      @pvoutput = Pvoutput.new
+
+      solar = Pvoutput.find_by user_id: current_user.id
+
+      if solar
+        @pvoutput = solar
+      else
+        @pvoutput = Pvoutput.new
+      end
     end
 
   end
