@@ -32,13 +32,23 @@ class Pvoutput::V1::PvoutputController < ApplicationController
         uri = URI.parse("https://pvoutput.org/service/r2/getstatus.jsp?key=#{@@pv_key}&sid=#{@@pv_sid}")
         pvoutput = Net::HTTP.get_response(uri)
 
-        pv_result = Array.new
-        pv_result = pvoutput.body.split(',')
+        #check return code from PV Output
+        if pvoutput.code == "200"
 
-        kilowatt = pv_result[2].to_d/1000
+          pv_result = Array.new
+          pv_result = pvoutput.body.split(',')
 
-        @@subtitle = "generierter Strom"
-        @@message = "Du hast bisher #{kilowatt.round(2)} Kilowatt Stunden generiert."
+          kilowatt = pv_result[2].to_d/1000
+
+          @@subtitle = "generierter Strom"
+          @@message = "Du hast bisher #{kilowatt.round(2)} Kilowatt Stunden generiert."
+
+        else
+
+          @@subtitle = "Ein Fehler ist aufgetreten."
+          @@message = "Bitte prüfe deine Zugangsdaten für pvoutput.org unter https://alexa.mellentin.eu"
+
+        end
 
         response.add_speech(@@message)
         response.add_hash_card( { :title => "PVoutput", :subtitle => @@subtitle, :content => @@message } )
@@ -63,24 +73,39 @@ class Pvoutput::V1::PvoutputController < ApplicationController
           uri = URI.parse("https://pvoutput.org/service/r2/getstatus.jsp?key=#{@@pv_key}&sid=#{@@pv_sid}")
           pvoutput = Net::HTTP.get_response(uri)
 
-          pv_result = Array.new
-          pv_result = pvoutput.body.split(',')
+          #check return code from PV Output
+          if pvoutput.code == "200"
 
-          kilowatt = pv_result[2].to_d/1000
+            pv_result = Array.new
+            pv_result = pvoutput.body.split(',')
 
-          @@subtitle = "generierter Strom"
-          @@message = "Du hast bisher #{kilowatt.round(2)} Kilowatt Stunden generiert."
+            kilowatt = pv_result[2].to_d/1000
+
+            @@subtitle = "generierter Strom"
+            @@message = "Du hast bisher #{kilowatt.round(2)} Kilowatt Stunden generiert."
+          else
+            @@subtitle = "Ein Fehler ist aufgetreten."
+            @@message = "Bitte prüfe deine Zugangsdaten für pvoutput.org unter https://alexa.mellentin.eu"
+          end
         when "getPVoutputUsage"
           uri = URI.parse("https://pvoutput.org/service/r2/getstatus.jsp?key=#{@@pv_key}&sid=#{@@pv_sid}")
           pvoutput = Net::HTTP.get_response(uri)
 
-          pv_result = Array.new
-          pv_result = pvoutput.body.split(',')
+          #check return code from PV Output
+          if pvoutput.code == "200"
+            pv_result = Array.new
+            pv_result = pvoutput.body.split(',')
 
-          kilowatt = pv_result[4].to_d/1000
+            kilowatt = pv_result[4].to_d/1000
 
-          @@subtitle = "verbrauchter Strom"
-          @@message = "Du hast bisher #{kilowatt.round(2)} Kilowatt Stunden verbraucht."
+            @@subtitle = "verbrauchter Strom"
+            @@message = "Du hast bisher #{kilowatt.round(2)} Kilowatt Stunden verbraucht."
+          else
+
+            @@subtitle = "Ein Fehler ist aufgetreten."
+            @@message = "Bitte prüfe deine Zugangsdaten für pvoutput.org unter https://alexa.mellentin.eu"
+
+          end
         else
           @@subtitle = "ein Fehler ist aufgetreten"
           @@message = "Ich verstehe dich leider nicht."
